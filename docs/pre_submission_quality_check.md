@@ -7,7 +7,7 @@ This is a final engineering/reviewer check, not a claim of production certificat
 | Clean-machine entry point | PASS | `README.md` -> `scripts/run_pipeline.py` |
 | Pipeline terminates cleanly | PASS | ~30s local run; exits code 0 |
 | Automated tests | PASS | 14/14 passed (0 warnings) |
-| Repeated-run sensitivity | PASS | 5 stratified holdouts; 81.4%-83.2%, spread 1.73 points |
+| Repeated-run sensitivity | PASS | 5 stratified holdouts on training_category; 77.1%-78.7%, mean 77.8%, spread 1.60 points |
 | Independent manual validation | PASS | 104/110 model (strictly out-of-sample); 91/110 source tag |
 | Historical tags not treated as truth | PASS | Explicit in README, memo, questionnaire |
 | Must-have evidence gaps surfaced | PASS | `docs/requirements_matrix.md` + questionnaire |

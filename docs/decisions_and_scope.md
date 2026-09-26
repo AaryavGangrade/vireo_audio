@@ -9,7 +9,7 @@ This document details the critical architectural choices, deliberate scope omiss
 ### Push-Back 1: Refusing to Use "Largest Raw Queue = Two Hires"
 * **The Client Request:** In the email thread, Priya Raman stated that the team with the largest queue should receive the next two headcount hires.
 * **The Reality in the Data:**
-  * While Billing appears as the largest specialist queue (2,425 tickets, 20.8% of in-scope volume), **696 of those tickets (28.7%) actually resolve in Logistics**.
+  * While Billing appears as the largest specialist queue (2,425 tickets, 20.8% of in-scope volume), **658 tickets (27.1%) resolve in Logistics, rising to 696 (28.7%) including open reroutes**.
   * The intake bot is systematically misrouting courier and delivery delays into the payments queue because customers mention invoice numbers alongside tracking issues.
   * Finance Controller Arjun Mehta explicitly questioned approving **₹9 Lakhs/year** without a clear business case.
 * **The Decision:** I retained the requested monthly queue charts for transparency, but reframed the primary recommendation: **fix the intake routing leak first**. Reducing handoffs avoids ₹3.47 Lakhs/year in transfer penalties and avoids committing ₹9 Lakhs to the wrong department.
@@ -41,7 +41,7 @@ Every production system requires disciplined trade-offs under a five-hour evalua
 1. **Staffing-Capacity / Erlang-C Simulation:**
    * *Why omitted:* The dataset provides ticket creation and resolution timestamps, but **not active handle time**. A ticket open for 3 days usually involves 15 minutes of agent work and 71.75 hours of customer/courier wait time. Building an Erlang model on resolution duration creates dangerous false precision.
 2. **Heavy Deep Learning / Transformer Dependencies:**
-   * *Why omitted:* Installing PyTorch / HuggingFace requires gigabytes of downloads, introduces GPU dependencies, and risks breaking the "clean-machine" requirement. The Calibrated Linear SVM trains in 10 seconds, runs in 2ms, achieves 94.5% ground-truth accuracy, and occupies only 4.5 MB.
+   * *Why omitted:* Installing PyTorch / HuggingFace requires gigabytes of downloads, introduces GPU dependencies, and risks breaking the "clean-machine" requirement. The Calibrated Linear SVM trains in 10 seconds, runs in 2ms, achieves 94.5% ground-truth accuracy, and occupies ~9 MB on disk.
 3. **Deep Customer & Order Segmentation:**
    * *Why omitted:* Joining `customers.csv` and `orders.csv` provides lifetime value insights, but does not alter the immediate routing or headcount decision. Keeping the schema lean prevents bloat.
 4. **Fully Autonomous Routing (No Human in the Loop):**
@@ -53,8 +53,8 @@ Every production system requires disciplined trade-offs under a five-hour evalua
 
 To ensure production-grade reliability, the codebase incorporates five explicit defensive mechanisms:
 
-* **Repeatability & Sensitivity:** Evaluated across 5 random holdout seeds (7, 19, 42, 73, 101). The observed spread is narrow (81.4% – 83.2%, mean 82.2%, SD 0.65%), proving the model is not a lucky single-seed fluke.
+* **Repeatability & Sensitivity:** Evaluated across 5 random holdout seeds (7, 19, 42, 73, 101) against policy-corrected specialist resolution (`training_category`). The observed spread is narrow (77.1% – 78.7%, mean 77.8%, SD 0.63%, spread 1.60%), proving stability across random splits rather than a lucky fluke. (Historical raw tag agreement across the same seeds is 81.4% – 83.2%, mean 82.2%).
 * **Missing-Key & Schema Defense:** `validate_input_keys()` enforces that both `tickets.csv` and `agents.csv` contain all required keys, unknown agent IDs fail loudly with error traces, and unsupported channels are caught before processing.
 * **Channel-Aware Routing:** Frontline queues automatically resolve to the specific channel frontline (e.g. Chat → Chat Frontline, Voice → Voice Frontline) rather than generic placeholders.
 * **Safe Fallbacks:** The Gemini narrator layer in `src/narrator.py` handles missing API keys, rate limits, or empty metrics dictionaries without ever throwing runtime exceptions.
-* **Automated Test Suite:** 12 automated unit and integration tests (`tests/test_pipeline.py`) verify data schemas, timezone corrections, metric calculations, and edge cases with zero warnings.
+* **Automated Test Suite:** 14 automated unit and integration tests (`tests/test_pipeline.py`) verify data schemas, timezone corrections, metric calculations, and edge cases with zero warnings.

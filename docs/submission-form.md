@@ -7,8 +7,9 @@ It targets reducing Vireo's recorded handoff rate from **16.81% toward 13.4%** (
 
 ## What does one run cost, and what would a month cost at Vireo's volume (~650 tickets/week)?
 **₹0 in paid inference calls** for classification. The calibrated LinearSVC runs 100% locally and offline.
-- Classifier: 650 tickets/week × 4.33 weeks ≈ 2,815 tickets/month × ₹0 = **₹0/month**.
-- Optional Gemini 3.5 Flash Lite executive briefing: ~850 input + ~280 output tokens on pre-computed summary metrics = **₹0.012 INR (~1.2 paise) per run**, or **~₹0.05/month** at weekly reviews. Degrades to a deterministic static template at ₹0 if no key is provided.
+- **Classifier:** 650 tickets/week × 4.33 weeks ≈ 2,815 tickets/month × ₹0 = **₹0/month**.
+- **Optional Gemini 3.5 Flash Lite executive briefing:** ~850 input + ~280 output tokens on pre-computed summary metrics = **₹0.012 INR (~1.2 paise) per run**, or **~₹0.05/month** at weekly reviews. Degrades to a deterministic static template at ₹0 if no key is provided.
+- *(Excludes local compute/operator machine cost; no hosting specs were provided).*
 
 ## How do you know it works?
 - **Ground Truth Alignment:** Evaluated against `training_category` (downstream resolving team per Support Policy §6), which corrects the 28.7% intake bot misrouting in Billing.
@@ -25,23 +26,24 @@ Yes. I delivered the requested monthly charts, but pushed back on "largest raw q
 - **Pivot:** Reframed the goal around fixing intake routing to cut handoffs toward 13.4% before adding headcount.
 
 ## What is wrong with what you are handing us?
-- Manual audit is 110 tickets; an exploratory evaluation sample, not an exhaustive gold benchmark.
-- Historical tags have ~17% noise; holdout accuracy measures label agreement, not absolute ground truth.
-- Model operates text-only on opening messages at ticket creation; cannot inspect attachments or order state.
+- Manual audit is 110 tickets; a stratified exploratory evaluation sample, not an exhaustive production gold benchmark.
+- Historical tags have ~17% noise; the 78.7% holdout accuracy measures agreement with policy-corrected specialist resolution, not an infallible benchmark.
+- Model operates text-only on opening messages at ticket creation; cannot inspect attachments, order database state, or subsequent agent exchanges.
 - The 20% handoff reduction (₹3.47L) is a pilot target hypothesis, not an observed causal treatment effect.
 - Legacy Freshdesk rows lack transfer tracking; transfer costs reflect current helpdesk only.
 - It is a pilot dashboard, lacking enterprise SSO, RBAC, and live telemetry drift monitoring.
 
 ## What did you deliberately leave out, and why that rather than something else?
 I left out staffing-hours simulations, direct CSAT optimization, paid LLM classification, and 100% autonomous dark-launch routing.
-- **Why:** The export lacks granular hourly shift schedules; CSAT has high voluntary response bias (~30% response rate); LLM APIs introduce recurring costs and uncalibrated probabilities. I prioritized queue leakage, out-of-sample validation, and confidence thresholds because they directly resolve the headcount vs. routing question.
+- **Why:** The export lacks active handle times and shift schedules; CSAT has high voluntary response bias (~30% response rate); LLM APIs introduce recurring costs and uncalibrated probabilities. I prioritized queue leakage, out-of-sample validation, and confidence thresholds because they directly resolve the headcount vs. routing question.
 
 ## Anything you built or found that nobody asked for?
 1. Identified and corrected the legacy UTC/IST resolution timestamp offset (+05:30) per policy §8.
 2. First-assigned vs. resolving team routing matrix exposing the 27.1% Billing $\to$ Logistics leak.
-3. Strict out-of-sample isolation of the 110 audit tickets during training to prove zero data leakage.
+3. Quantified Billing $\to$ Logistics leakage isolating 658 resolved/closed (27.1%) vs 696 total assigned (28.7%).
 4. Confidence-calibrated triage routing (Brier score 0.371; 70% threshold).
-5. 14-test automated unit test suite.
+5. Strict out-of-sample isolation of the 110 audit tickets during training to prove zero data leakage.
+6. 14-test automated unit test suite enforcing data, schema, and policy invariants.
 
 ## What did you use AI for?
 - **Tools:** ChatGPT (GPT-5.6 Luna) for architectural sounding board, code review, and memo drafting; Gemini 3.5 Flash Lite for on-demand executive text synthesis.
@@ -50,12 +52,13 @@ I left out staffing-hours simulations, direct CSAT optimization, paid LLM classi
 - **Screen recording:** [Paste Public Video Link]
 
 ## Your Public Google Drive Link
-[Paste Public Drive folder link containing final ZIP + 3-minute video]
+<!-- CANDIDATE ACTION: Upload final ZIP + 3-minute screen recording to Google Drive and paste URL below -->
+**Drive URL:** *(pending — to be pasted before final submission)*
 
 ## Someone picks this up on Monday and you are unreachable. The three things they need to know.
 1. **How to run:** Run `pip install -r requirements.txt`, `python scripts/run_pipeline.py`, and `streamlit run app.py` (on Windows PowerShell, activate via `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\.venv\Scripts\Activate.ps1`, or call `.venv\Scripts\` directly). Put your Gemini API key in `.env` (or run without it for static fallback).
-2. **Data truth:** Do not trust raw source tags; historical tags have ~17% error. All numbers are computed deterministically by the local model; Gemini only generates prose.
-3. **The business decision:** Run an intake routing pilot to cut the 16.8% handoff rate toward 13.4% and eliminate the ~27% Billing $\to$ Logistics misrouting before committing ₹9L to two hires based on uncleaned raw volume.
+2. **Data truth vs. tags:** Do not trust raw source tags; historical tags have ~17% error. All numbers are computed deterministically by the local model; Gemini only formats verified metrics into text.
+3. **The core business decision:** Run an intake routing pilot to cut the 16.8% handoff rate toward 13.4% and eliminate the ~27% Billing $\to$ Logistics misrouting before committing ₹9L to two hires based on uncleaned raw volume.
 
 ## Honest hours spent.
 10

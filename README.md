@@ -113,7 +113,7 @@ Without it, the dashboard uses a high-quality static template — the tool never
 - `src/narrator.py` — Gemini-powered executive briefing generator with static fallback
 - `scripts/run_pipeline.py` — clean-machine entry point
 - `tests/` — data/policy sanity checks
-- `.env` — Gemini API key (optional; placeholder provided)
+- `.env.example` — template for optional Gemini API key (`.env` is git-ignored)
 - `outputs/business_metrics.json` — structured business case metrics
 - `outputs/monthly_by_category.csv` — requested monthly category breakdown
 - `outputs/monthly_by_team.csv` — requested monthly team breakdown

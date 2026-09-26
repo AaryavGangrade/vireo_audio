@@ -34,7 +34,7 @@ The classifier uses word and character TF-IDF features with a calibrated linear 
 
 ### How reliable is it?
 
-The model achieved 81.9% accuracy on one 2,307-ticket holdout against the historical category field. Across five stratified holdouts, accuracy ranged from 81.4% to 83.2% (mean 82.2%, SD 0.65 points), so the result is not being presented as a single-seed certainty. Because historical tags are themselves noisy, I separately reviewed an independent, stratified 110-ticket audit that was completely excluded from the model's training data: the model was correct on 104/110 (94.5%), versus 91/110 (82.7%) for the source tag.
+Trained against policy-corrected specialist resolution (`training_category`), the model achieved 78.7% accuracy on a 2,307-ticket holdout (and 76.5% agreement with uncleaned raw intake tags). Across five stratified holdouts, accuracy ranged from 77.1% to 78.7% (mean 77.8%, SD 0.63 points), demonstrating split stability across seeds. Because historical tags are themselves noisy, I separately reviewed an independent, stratified 110-ticket audit that was completely excluded from the model's training data: the model was correct on 104/110 (94.5%), versus 91/110 (82.7%) for the source tag.
 
 The remaining errors are mainly ambiguous product/hardware/app descriptions, vague `Other` cases, and messages where the same symptom can reasonably belong to more than one queue.
 
