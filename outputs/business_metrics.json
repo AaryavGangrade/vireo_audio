@@ -1,0 +1,48 @@
+{
+  "window_summary": {
+    "reporting_window": "2025-01-01 to 2026-06-30",
+    "total_in_scope_tickets": 11641,
+    "current_helpdesk_tickets": 7728,
+    "excluded_pre_window_note": "139 tickets before Jan 2025 excluded per README scope."
+  },
+  "operational_friction": {
+    "recorded_handoffs": 1299,
+    "recorded_handoff_rate": 0.168,
+    "target_handoff_rate": 0.134,
+    "rerouted_tickets_all_window": 1964,
+    "reroute_rate_all_window": 0.169
+  },
+  "billing_queue_analysis": {
+    "billing_first_assigned_tickets": 2425,
+    "billing_to_logistics_resolved_closed": 658,
+    "billing_to_logistics_open_pending": 38,
+    "billing_to_logistics_total_assigned": 696,
+    "billing_to_logistics_reroutes": 696,
+    "billing_queue_leakage_rate_resolved_closed": 0.271,
+    "billing_queue_leakage_rate_total_assigned": 0.287,
+    "billing_queue_leakage_rate": 0.287,
+    "interpretation": "27.1% of Billing's queue is resolved/closed by Logistics (658 tickets), rising to 28.7% (696 tickets) including open/pending routing -- the single largest routing failure."
+  },
+  "customer_experience": {
+    "avg_csat_no_transfer": 3.52,
+    "avg_csat_with_transfer": 2.74,
+    "csat_delta": 0.79,
+    "csat_sample_no_transfer": 3017,
+    "csat_sample_with_transfer": 525,
+    "interpretation": "Tickets with handoffs average ~0.8 stars lower CSAT than first-contact resolutions (correlation/association)."
+  },
+  "financial_impact_inr": {
+    "cost_per_transfer": 305,
+    "observed_transfer_cost": 396195,
+    "annualized_transfer_waste": 1732840,
+    "pilot_savings_target_20pct": 346568,
+    "proposed_headcount_cost_two_hires": 900000,
+    "total_pilot_value_opportunity": 1246568,
+    "interpretation": "Fixing routing before hiring saves both transfer waste and avoids premature Rs 9L salary commitment."
+  },
+  "service_levels": {
+    "sla_breach_count": 1292,
+    "sla_breach_rate": 0.111,
+    "annualized_sla_credit_penalty_inr": 1312977
+  }
+}

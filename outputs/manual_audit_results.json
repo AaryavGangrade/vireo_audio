@@ -1,0 +1,11 @@
+{
+  "n": 110,
+  "is_strictly_out_of_sample": true,
+  "training_tickets_excluded": 110,
+  "production_model_correct": 104,
+  "production_model_accuracy": 0.9455,
+  "source_tag_correct": 91,
+  "source_tag_accuracy": 0.8273,
+  "production_model_error_rate": 0.0545,
+  "methodology_note": "Evaluated on 110 stratified audit tickets that were completely excluded from model training."
+}

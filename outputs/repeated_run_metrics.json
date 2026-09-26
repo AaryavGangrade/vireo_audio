@@ -1,0 +1,43 @@
+{
+  "target_field": "training_category",
+  "target_description": "Specialist-resolved ground truth per policy \u00a76",
+  "runs": [
+    {
+      "seed": 7,
+      "n_test": 2307,
+      "accuracy": 0.7776,
+      "error_rate": 0.2224
+    },
+    {
+      "seed": 19,
+      "n_test": 2307,
+      "accuracy": 0.7729,
+      "error_rate": 0.2271
+    },
+    {
+      "seed": 42,
+      "n_test": 2307,
+      "accuracy": 0.7872,
+      "error_rate": 0.2128
+    },
+    {
+      "seed": 73,
+      "n_test": 2307,
+      "accuracy": 0.7711,
+      "error_rate": 0.2289
+    },
+    {
+      "seed": 101,
+      "n_test": 2307,
+      "accuracy": 0.7785,
+      "error_rate": 0.2215
+    }
+  ],
+  "n_runs": 5,
+  "mean_accuracy": 0.7775,
+  "std_accuracy": 0.0063,
+  "min_accuracy": 0.7711,
+  "max_accuracy": 0.7872,
+  "range_accuracy": 0.0161,
+  "interpretation": "Variation across five stratified holdout splits on policy-corrected ground truth (training_category); measures split sensitivity, not production drift."
+}

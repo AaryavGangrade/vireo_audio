@@ -1,0 +1,111 @@
+{
+  "target_evaluated": "training_category",
+  "target_description": "Specialist-resolved ground truth per policy \u00a76 (resolving team ownership)",
+  "holdout_n": 2307,
+  "accuracy": 0.7872,
+  "error_rate": 0.2128,
+  "raw_historical_tag_agreement": 0.7646,
+  "brier_score": 0.371,
+  "calibration_analysis": {
+    "confidence_threshold": 0.7,
+    "auto_routed_share": 0.7208,
+    "auto_routed_accuracy": 0.7949,
+    "human_review_share": 0.2792,
+    "low_confidence_accuracy_if_forced": 0.7671,
+    "operational_justification": "At 70% threshold, 72.1% of tickets auto-route at 79.5% accuracy on specialist ground truth, while ambiguous tickets (27.9%) route to human triage to prevent avoidable transfer penalties."
+  },
+  "classification_report": {
+    "Account & Login": {
+      "precision": 0.8518518518518519,
+      "recall": 0.92,
+      "f1-score": 0.8846153846153846,
+      "support": 75.0
+    },
+    "App & Firmware": {
+      "precision": 0.8,
+      "recall": 0.8307692307692308,
+      "f1-score": 0.8150943396226416,
+      "support": 130.0
+    },
+    "Audio Quality": {
+      "precision": 0.7,
+      "recall": 0.9423076923076923,
+      "f1-score": 0.8032786885245902,
+      "support": 104.0
+    },
+    "Billing & Payments": {
+      "precision": 0.7854984894259819,
+      "recall": 0.7084468664850136,
+      "f1-score": 0.7449856733524355,
+      "support": 367.0
+    },
+    "Charging & Battery": {
+      "precision": 0.7527472527472527,
+      "recall": 0.9319727891156463,
+      "f1-score": 0.8328267477203647,
+      "support": 147.0
+    },
+    "Connectivity": {
+      "precision": 0.748898678414097,
+      "recall": 0.9392265193370166,
+      "f1-score": 0.8333333333333334,
+      "support": 181.0
+    },
+    "Delivery & Shipping": {
+      "precision": 0.7983471074380165,
+      "recall": 0.9217557251908397,
+      "f1-score": 0.8556244464127547,
+      "support": 524.0
+    },
+    "Other": {
+      "precision": 0.8300653594771242,
+      "recall": 0.41233766233766234,
+      "f1-score": 0.5509761388286334,
+      "support": 308.0
+    },
+    "Product Enquiry": {
+      "precision": 0.8106060606060606,
+      "recall": 0.9385964912280702,
+      "f1-score": 0.8699186991869918,
+      "support": 114.0
+    },
+    "Returns & Refunds": {
+      "precision": 0.827906976744186,
+      "recall": 0.7876106194690266,
+      "f1-score": 0.8072562358276644,
+      "support": 226.0
+    },
+    "Warranty & Repair": {
+      "precision": 0.7452830188679245,
+      "recall": 0.6030534351145038,
+      "f1-score": 0.6666666666666666,
+      "support": 131.0
+    },
+    "accuracy": 0.7871694841785869,
+    "macro avg": {
+      "precision": 0.7864731632338632,
+      "recall": 0.8123706392140637,
+      "f1-score": 0.7876887594628602,
+      "support": 2307.0
+    },
+    "weighted avg": {
+      "precision": 0.7916400084943529,
+      "recall": 0.7871694841785869,
+      "f1-score": 0.7756869718202993,
+      "support": 2307.0
+    }
+  },
+  "classes": [
+    "Account & Login",
+    "App & Firmware",
+    "Audio Quality",
+    "Billing & Payments",
+    "Charging & Battery",
+    "Connectivity",
+    "Delivery & Shipping",
+    "Other",
+    "Product Enquiry",
+    "Returns & Refunds",
+    "Warranty & Repair"
+  ]
+}
