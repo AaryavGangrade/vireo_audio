@@ -39,3 +39,6 @@ htmlcov/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Local candidate scripts & private drafting notes
+docs/screen_recording_script.md

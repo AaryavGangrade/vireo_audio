@@ -121,7 +121,7 @@ Without it, the dashboard uses a high-quality static template — the tool never
 - `outputs/ticket_predictions.csv` — AI output for every historical ticket
 - `outputs/model_metrics.json` — holdout model metrics
 - `outputs/manual_audit.csv` — stratified manual audit set
-- `docs/` — memo, decisions, questionnaire answers, recording script
+- `docs/` — executive memo, decisions and scope, questionnaire answers, and prompt log
 
 ## Reviewer-critical gaps
 

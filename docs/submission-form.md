@@ -90,8 +90,6 @@ The production software architecture implements a **hybrid model**:
 
 The initial prototype considered a basic logistic regression model, which was upgraded to a calibrated linear SVM for superior decision-boundary sharpness and probabilistic reliability. An end-to-end LLM classifier was explicitly rejected because classifying ~2,815 tickets/month via API would introduce unnecessary recurring operational costs, latency, vendor lock-in, and uncalibrated classification probabilities.
 
-Screen-recording script: `docs/screen_recording_script.md`.
-
 ## Your Public Google Drive Link
 
 <!-- CANDIDATE ACTION: Upload final ZIP + 3-minute screen recording to Google Drive and paste URL below -->
