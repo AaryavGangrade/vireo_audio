@@ -49,11 +49,10 @@ I left out staffing-hours simulations, direct CSAT optimization, paid LLM classi
 - **Tools:** ChatGPT (GPT-5.6 Luna) for architectural sounding board, code review, and memo drafting; Gemini 3.5 Flash Lite for on-demand executive text synthesis.
 - **Where it helped:** Challenging the "hire for Billing" assumption, structuring the business case, and formulating calibration checks.
 - **Wasted time / Threw away:** Early attempts at end-to-end LLM ticket classification; discarded due to hallucinations, high token costs, and uncalibrated probabilities in favor of a local calibrated LinearSVC.
-- **Screen recording:** [Paste Public Video Link]
+- **Screen recording:** https://drive.google.com/file/d/1n4gMEOy-FGd49BkAFa-1ED1tYHe_GhNN/view?usp=drive_link
 
 ## Your Public Google Drive Link
-<!-- CANDIDATE ACTION: Upload final ZIP + 3-minute screen recording to Google Drive and paste URL below -->
-**Drive URL:** *(pending — to be pasted before final submission)*
+https://drive.google.com/file/d/1n4gMEOy-FGd49BkAFa-1ED1tYHe_GhNN/view?usp=drive_link
 
 ## Someone picks this up on Monday and you are unreachable. The three things they need to know.
 1. **How to run:** Run `pip install -r requirements.txt`, `python scripts/run_pipeline.py`, and `streamlit run app.py` (on Windows PowerShell, activate via `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\.venv\Scripts\Activate.ps1`, or call `.venv\Scripts\` directly). Put your Gemini API key in `.env` (or run without it for static fallback).

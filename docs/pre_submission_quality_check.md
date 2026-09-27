@@ -21,5 +21,5 @@ This is a final engineering/reviewer check, not a claim of production certificat
 | Business number arithmetic | PASS | 1,299 × ₹305; annualized at 650/week |
 | Unsupported causal savings claim | PASS | savings described as pilot target, not realized impact |
 | Template residue | PASS | only external candidate action is the explicitly labelled Google Drive upload field |
-| Screen recording | CANDIDATE ACTION | 3-minute executive walkthrough recording |
-| Public Drive URL | CANDIDATE ACTION | paste after upload into `docs/submission-form.md` |
+| Screen recording | COMPLETE | 3-minute executive walkthrough recording provided |
+| Public Drive URL | COMPLETE | https://drive.google.com/file/d/1n4gMEOy-FGd49BkAFa-1ED1tYHe_GhNN/view?usp=drive_link |
