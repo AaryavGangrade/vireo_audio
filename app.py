@@ -18,7 +18,7 @@ st.caption("Set E | Jan 2025–Jun 2026 | Hybrid AI: Local classifier + Gemini e
 
 @st.cache_data
 def load_prepared():
-    tickets, agents, *_ = load_data(DATA)
+    tickets, agents = load_data(DATA)
     return prepare_tickets(tickets, agents)
 
 @st.cache_resource

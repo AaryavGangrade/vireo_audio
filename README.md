@@ -115,13 +115,15 @@ Without it, the dashboard uses a high-quality static template — the tool never
 - `tests/` — data/policy sanity checks
 - `.env.example` — template for optional Gemini API key (`.env` is git-ignored)
 - `outputs/business_metrics.json` — structured business case metrics
+- `outputs/model_metrics.json` — holdout model metrics
+- `outputs/repeated_run_metrics.json` — 5-fold sensitivity metrics
+- `outputs/manual_audit_results.json` — out-of-sample manual audit metrics
+- `outputs/manual_audit.csv` — stratified manual audit sample
 - `outputs/monthly_by_category.csv` — requested monthly category breakdown
 - `outputs/monthly_by_team.csv` — requested monthly team breakdown
 - `outputs/routing_matrix.csv` — first-assigned vs final resolving team
-- `outputs/ticket_predictions.csv` — AI output for every historical ticket
-- `outputs/model_metrics.json` — holdout model metrics
-- `outputs/manual_audit.csv` — stratified manual audit set
-- `docs/` — executive memo, decisions and scope, questionnaire answers, and prompt log
+- `docs/` — executive memo (`memo_to_priya.md`), architecture & scope (`decisions_and_scope.md`), and AI disclosure (`AI_DISCLOSURE.md`)
+- `submission/` — hiring questionnaire answers with screen recording video link (`submission-form.md`)
 
 ## Reviewer-critical gaps
 

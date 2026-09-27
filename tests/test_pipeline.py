@@ -7,7 +7,7 @@ from src.config import SLA_MINUTES
 ROOT = Path(__file__).resolve().parents[1]
 
 def test_window_and_schema():
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     assert df["created_dt"].min() >= pd.Timestamp("2025-01-01")
     assert df["created_dt"].max() < pd.Timestamp("2026-07-01")
@@ -15,27 +15,27 @@ def test_window_and_schema():
     assert df["resolved_team"].notna().all()
 
 def test_legacy_resolution_fix():
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     legacy = df[df["source_system"] == "legacy_fd"]
     valid = legacy["resolved_dt"].notna()
     assert (legacy.loc[valid, "resolved_dt"] >= legacy.loc[valid, "created_dt"]).all()
 
 def test_sla_targets():
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     assert df["sla_target_minutes"].notna().all()
     assert set(df["sla_target_minutes"].unique()) <= set(SLA_MINUTES.values())
 
 def test_policy_ownership_categories():
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     assert (df.loc[df.resolved_team == "Billing", "training_category"] == "Billing & Payments").all()
     assert (df.loc[df.resolved_team == "Logistics", "training_category"] == "Delivery & Shipping").all()
 
 
 def test_missing_agent_key_fails_loudly():
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     bad = tickets.copy()
     bad.loc[0, "agent_id"] = "DOES_NOT_EXIST"
     try:
@@ -54,7 +54,7 @@ def test_channel_aware_frontline_recommendation():
 
 def test_billing_leakage_metric():
     """Verify that business_metrics captures the Billing → Logistics leakage."""
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     bm = business_metrics(df)
     bqa = bm["billing_queue_analysis"]
@@ -65,7 +65,7 @@ def test_billing_leakage_metric():
 
 def test_csat_impact_metric():
     """Verify CSAT analysis: handoff tickets should have lower CSAT than non-handoff."""
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     bm = business_metrics(df)
     cx = bm["customer_experience"]
@@ -76,7 +76,7 @@ def test_csat_impact_metric():
 
 def test_business_metrics_structure():
     """Verify business_metrics returns all required top-level sections."""
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     bm = business_metrics(df)
     required_sections = [
@@ -89,7 +89,7 @@ def test_business_metrics_structure():
 
 def test_handoff_rate_uses_current_helpdesk_only():
     """Verify that handoff rate denominator is current-helpdesk tickets (not total window)."""
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     bm = business_metrics(df)
     # Handoff rate should be ~16.8%, NOT ~11.1% (which would indicate using total 11,641 as denominator)
@@ -100,7 +100,7 @@ def test_handoff_rate_uses_current_helpdesk_only():
 
 def test_missing_agent_column_fails_loudly():
     """Verify that agents table schema validation catches missing columns immediately."""
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     bad_agents = agents.drop(columns=["team"])
     try:
         validate_input_keys(tickets, bad_agents)
@@ -125,7 +125,7 @@ def test_narrator_missing_keys_safe_fallback():
 
 def test_billing_leakage_detailed_breakdown():
     """Verify precise split of 658 resolved/closed vs 696 total assigned Billing->Logistics reroutes."""
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     bm = business_metrics(df)
     bqa = bm["billing_queue_analysis"]
@@ -139,7 +139,7 @@ def test_billing_leakage_detailed_breakdown():
 def test_audit_strictly_out_of_sample():
     """Verify that train_production_model strictly excludes the 110 audit tickets and confirms zero leakage."""
     from src.pipeline import train_production_model
-    tickets, agents, *_ = load_data(ROOT / "data")
+    tickets, agents = load_data(ROOT / "data")
     df = prepare_tickets(tickets, agents)
     model, audit_results = train_production_model(df)
     assert audit_results["is_strictly_out_of_sample"] is True

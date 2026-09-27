@@ -21,12 +21,11 @@ OUTPUTS = ROOT / "outputs"
 MODELS = ROOT / "models"
 
 def load_data(data_dir: Path = DATA):
-    tickets = pd.read_csv(data_dir / "99ca137e-844d-47d7-8ce8-bf60ce272ba3-tickets.csv")
-    agents = pd.read_csv(data_dir / "69f9276d-b40b-4596-b0bc-5ffde23d2c20-agents.csv")
-    customers = pd.read_csv(data_dir / "81d39148-7b2f-4f14-9123-110d488b953c-customers.csv")
-    orders = pd.read_csv(data_dir / "61113d4b-ee13-4ce3-9b1c-bd7f6e51ecd2-orders.csv")
-    products = pd.read_csv(data_dir / "ae47ec0e-9121-4cc5-9261-f8da501eea96-products.csv")
-    return tickets, agents, customers, orders, products
+    tickets_file = next(data_dir.glob("*tickets.csv"), data_dir / "tickets.csv")
+    agents_file = next(data_dir.glob("*agents.csv"), data_dir / "agents.csv")
+    tickets = pd.read_csv(tickets_file)
+    agents = pd.read_csv(agents_file)
+    return tickets, agents
 
 def validate_input_keys(tickets: pd.DataFrame, agents: pd.DataFrame) -> None:
     required_ticket = {"ticket_id", "created_at", "channel", "category", "assigned_team", "agent_id", "source_system"}
@@ -280,11 +279,6 @@ def create_outputs(t: pd.DataFrame, model: Pipeline, model_metrics: dict, audit_
     pd.crosstab(t.month, t.category).to_csv(OUTPUTS/"monthly_by_category.csv")
     pd.crosstab(t.month, t.assigned_team).to_csv(OUTPUTS/"monthly_by_team.csv")
     pd.crosstab(t.assigned_team, t.resolved_team).to_csv(OUTPUTS/"routing_matrix.csv")
-    proba = model.predict_proba(t.text); pred = model.predict(t.text)
-    pred_df = t[["ticket_id","created_at","channel","category","assigned_team","resolved_team","customer_message"]].copy()
-    pred_df["ai_category"] = pred; pred_df["ai_confidence"] = proba.max(axis=1).round(4)
-    pred_df["ai_recommended_team"] = [recommend_team(c, ch) for c, ch in zip(pred_df.ai_category, pred_df.channel)]
-    pred_df.to_csv(OUTPUTS/"ticket_predictions.csv", index=False)
     bm = business_metrics(t)
     (OUTPUTS/"business_metrics.json").write_text(json.dumps(bm, indent=2, ensure_ascii=False), encoding="utf-8")
     (OUTPUTS/"model_metrics.json").write_text(json.dumps(model_metrics, indent=2), encoding="utf-8")
@@ -292,16 +286,10 @@ def create_outputs(t: pd.DataFrame, model: Pipeline, model_metrics: dict, audit_
         (OUTPUTS/"manual_audit_results.json").write_text(json.dumps(audit_results, indent=2), encoding="utf-8")
     repeated = run_repeated_holdout(t)
     (OUTPUTS/"repeated_run_metrics.json").write_text(json.dumps(repeated, indent=2), encoding="utf-8")
-    monthly = t.groupby("month").agg(tickets=("ticket_id","size"), sla_breaches=("sla_breach","sum"),
-                                      rerouted_tickets=("rerouted","sum"), recorded_transfers=("transfers","sum"))
-    monthly["sla_breach_rate"] = (monthly.sla_breaches/monthly.tickets).round(4)
-    monthly["reroute_rate"] = (monthly.rerouted_tickets/monthly.tickets).round(4)
-    monthly["transfer_cost_inr"] = (monthly.recorded_transfers.fillna(0)*TRANSFER_COST_INR).round(0)
-    monthly.to_csv(OUTPUTS/"monthly_operating_metrics.csv")
     joblib.dump(model, MODELS/"vireo_category_model.joblib")
 
 def main():
-    tickets, agents, customers, orders, products = load_data()
+    tickets, agents = load_data()
     t = prepare_tickets(tickets, agents)
     model, metrics = run_model_validation(t)
     production_model, audit_results = train_production_model(t)

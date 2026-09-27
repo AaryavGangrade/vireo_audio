@@ -44,3 +44,13 @@ desktop.ini
 docs/screen_recording_script.md
 docs/pre_submission_quality_check.md
 docs/requirements_matrix.md
+
+# Unused reference datasets (clean lean schema)
+data/*customers.csv
+data/*orders.csv
+data/*products.csv
+
+# Redundant generated snapshots & charts
+outputs/ticket_predictions.csv
+outputs/monthly_operating_metrics.csv
+outputs/*.png
